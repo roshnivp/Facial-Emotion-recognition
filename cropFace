@@ -1,0 +1,41 @@
+#!/Users/roshni/.virtualenvs/cv/bin/python
+import cv2
+import os, sys, glob
+
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+base_image = '/Users/roshni/Desktop/CS297/week5/KDEF_Rotated'
+out_path ='/Users/roshni/Desktop/CS297/week5/KDEF_Rotated_cropped'
+def Detect_face_and_eye(img_path, output_path):
+        for infile in glob.glob( os.path.join(img_path, "*.JPG") ):
+                img = cv2.imread(infile,0)
+                path =os.path.basename(infile)
+                print path[6:8]
+                if (path[6:8]==('S.')):
+                  img = img[260:620,135:430]
+    #            elif (path[6:8]==('FL')):
+     #              img = img[260:620,40:310]
+      #          elif (path[6:8]==('FR')):
+       #            img = img[260:620,180:530]
+                elif (path[6:8]==('HL')):
+                   img = img[260:620,75:400]
+                elif (path[6:8]==('HR')):
+                   img = img[260:620,120:480]
+               # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                #faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+#                print(img.shape)
+           #     for (x,y,w,h) in faces:
+            #        print(img.shape)
+             #       cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
+              #  sub_face = img[y:y+h, x:x+w]
+               # sub_face =cv2.resize(sub_face, (256, 256))
+                #sub_face =cv2.cvtColor(sub_face, cv2.COLOR_BGR2GRAY)
+                #print sub_face.shape
+                img = cv2.resize(img, (256, 256))
+                file_name = 'cropped'+'-'+infile.split('/')[-1]
+                file_path = output_path+'/'+ file_name
+                cv2.imwrite(file_path, img)
+                print '[Preprocessing...] %s' % file_name
+
+if __name__=="__main__":
+  Detect_face_and_eye(base_image, out_path)
+
